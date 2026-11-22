@@ -1,0 +1,650 @@
+<!DOCTYPE html>  <html lang="id">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">  
+<meta name="theme-color" content="#101114">  
+<title>MyShort Wallet</title>  <link rel="stylesheet" href="premium-brand.css">  <style>  
+:root{  
+ --bg:#101114;  
+ --panel:#1d2026;  
+ --line:#363b45;  
+ --text:#f5f6f8;  
+ --muted:#a1a7b2;  
+ --orange:#ff982f;  
+ --green:#48c78e;  
+}  
+*{box-sizing:border-box}  
+  
+body{  
+ margin:0;  
+ min-height:100vh;  
+ background:radial-gradient(ellipse at 50% 0%,#302218,#17181c 48%,#101114 85%);  
+ color:var(--text);  
+ font-family:Inter,Roboto,Arial,sans-serif;  
+}  
+  
+.app{  
+ width:min(100%,460px);  
+ min-height:100vh;  
+ margin:auto;  
+ padding:22px 18px calc(110px + env(safe-area-inset-bottom));  
+}  
+  
+.top{  
+ display:flex;  
+ justify-content:space-between;  
+ align-items:center;  
+ margin-bottom:30px;  
+}  
+  
+.brand{  
+ display:flex;  
+ align-items:center;  
+ gap:10px;  
+ font-weight:800;  
+}  
+  
+.logo{  
+ width:48px;  
+ height:48px;  
+ object-fit:contain;  
+ border-radius:14px;  
+}  
+  
+.brand small{  
+ display:block;  
+ color:var(--muted);  
+ font-size:10px;  
+ letter-spacing:2px;  
+ margin-top:4px;  
+}  
+  
+.secure{  
+ font-size:11px;  
+ color:#c2c8d1;  
+ background:#202329;  
+ border:1px solid #353943;  
+ border-radius:20px;  
+ padding:9px 12px;  
+}  
+  
+.screen{display:none}  
+.screen.active{display:block}  
+  
+  
+  
+h1{  
+ font-size:25px;  
+ margin:0 0 8px;  
+}  
+  
+.sub{  
+ font-size:13px;  
+ color:var(--muted);  
+ line-height:1.6;  
+}  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+.wallet-head{  
+ display:flex;  
+ align-items:center;  
+ justify-content:space-between;  
+ margin-bottom:20px;  
+}  
+  
+.wallet-head h1{font-size:23px}  
+  
+.avatar{  
+ width:43px;  
+ height:43px;  
+ border-radius:50%;  
+ display:grid;  
+ place-items:center;  
+ background:#292d34;  
+ border:1px solid #414650;  
+ color:#ffb15e;  
+ font-weight:800;  
+}  
+  
+.balance-card{  
+ position:relative;  
+ overflow:hidden;  
+ padding:24px 22px;  
+ border-radius:25px;  
+ background:linear-gradient(135deg,#f19539,#b95d1d);  
+ color:#1b1713;  
+ box-shadow:0 14px 30px #d66c2933;  
+}  
+  
+.balance-card:after{  
+ content:"";  
+ position:absolute;  
+ width:190px;  
+ height:190px;  
+ border:1px solid #ffffff30;  
+ border-radius:50%;  
+ right:-65px;  
+ top:-85px;  
+ box-shadow:0 0 0 22px #ffffff0b,0 0 0 45px #ffffff08;  
+}  
+  
+.balance-row{  
+ display:flex;  
+ justify-content:space-between;  
+ align-items:center;  
+ position:relative;  
+ z-index:1;  
+}  
+  
+.balance-title{  
+ font-size:13px;  
+ font-weight:700;  
+}  
+  
+.balance{  
+ font-size:34px;  
+ font-weight:850;  
+ margin:17px 0 5px;  
+ position:relative;  
+ z-index:1;  
+}  
+  
+.balance-foot{  
+ font-size:12px;  
+ position:relative;  
+ z-index:1;  
+}  
+  
+.eye{  
+ border:1px solid #ffffff55;  
+ background:#ffffff20;  
+ border-radius:10px;  
+ padding:8px 11px;  
+ color:#24180f;  
+}  
+  
+.actions{  
+ display:grid;  
+ grid-template-columns:repeat(4,1fr);  
+ gap:9px;  
+ margin:22px 0 27px;  
+}  
+  
+.action{  
+ text-align:center;  
+ color:var(--text);  
+ text-decoration:none;  
+ font-size:12px;  
+}  
+  
+.action-icon{  
+ width:60px;  
+ height:60px;  
+ margin:0 auto 9px;  
+ border-radius:19px;  
+ background:linear-gradient(145deg,#292d34,#1b1e23);  
+ border:1px solid #373c45;  
+ display:grid;  
+ place-items:center;  
+ color:#ffb15e;  
+ font-size:25px;  
+ box-shadow:4px 4px 9px #0005,-3px -3px 8px #ffffff08;  
+}  
+  
+.action:active .action-icon{  
+ transform:scale(.95);  
+}  
+  
+.section-title{  
+ display:flex;  
+ align-items:center;  
+ justify-content:space-between;  
+ margin:8px 2px 13px;  
+}  
+  
+.section-title strong{font-size:16px}  
+  
+.section-title span{  
+ font-size:11px;  
+ color:var(--muted);  
+}  
+  
+.asset-list,.history{  
+ background:linear-gradient(145deg,#202329,#181a1f);  
+ border:1px solid #30343c;  
+ border-radius:20px;  
+ padding:4px 15px;  
+ box-shadow:0 8px 22px #0003;  
+}  
+  
+.asset{  
+ display:flex;  
+ align-items:center;  
+ gap:11px;  
+ padding:15px 0;  
+ border-bottom:1px solid #30343c;  
+}  
+  
+.asset:last-child{border:0}  
+  
+.coin{  
+ width:43px;  
+ height:43px;  
+ border-radius:50%;  
+ display:grid;  
+ place-items:center;  
+ font-weight:850;  
+ font-size:12px;  
+ background:#30343b;  
+ color:#ffad52;  
+ border:1px solid #474d57;  
+ flex-shrink:0;  
+}  
+  
+.coin.idr{  
+ background:#18392f;  
+ color:#55d5a0;  
+}  
+  
+.asset-info{  
+ flex:1;  
+ min-width:0;  
+}  
+  
+.asset-info b{  
+ font-size:14px;  
+ display:block;  
+}  
+  
+.asset-info small{  
+ font-size:11px;  
+ color:var(--muted);  
+ display:block;  
+ margin-top:5px;  
+}  
+  
+.asset-value{  
+ text-align:right;  
+ font-size:13px;  
+ font-weight:750;  
+ overflow-wrap:anywhere;  
+}  
+  
+.asset-value small{  
+ display:block;  
+ color:var(--muted);  
+ font-size:10px;  
+ margin-top:5px;  
+ font-weight:500;  
+}  
+  
+.history{  
+ padding:17px 15px;  
+ margin-top:10px;  
+ text-align:center;  
+ color:var(--muted);  
+ font-size:12px;  
+}  
+  
+.status{  
+ font-size:11px;  
+ text-align:center;  
+ color:#9da5b1;  
+ min-height:18px;  
+ margin:12px 0;  
+}  
+  
+  
+.notice{  
+ font-size:10px;  
+ color:#777f8c;  
+ text-align:center;  
+ line-height:1.55;  
+ margin:15px 6px 0;  
+}  
+  
+/* NAVIGASI BAWAH */  
+.bottom-nav{  
+ position:fixed;  
+ z-index:100;  
+ left:50%;  
+ bottom:0;  
+ transform:translateX(-50%);  
+ width:min(100%,460px);  
+ display:grid;  
+ grid-template-columns:repeat(4,1fr);  
+ gap:5px;  
+ padding:9px 12px calc(9px + env(safe-area-inset-bottom));  
+ background:rgba(27,29,34,.97);  
+ border-top:1px solid #3a3e47;  
+ box-shadow:0 -8px 25px #0007;  
+ backdrop-filter:blur(14px);  
+}  
+  
+.bottom-nav a{  
+ min-width:0;  
+ display:flex;  
+ flex-direction:column;  
+ align-items:center;  
+ justify-content:center;  
+ gap:5px;  
+ padding:6px 2px;  
+ border-radius:12px;  
+ color:#a1a7b2;  
+ text-decoration:none;  
+ font-size:11px;  
+ font-weight:650;  
+ transition:.2s;  
+}  
+  
+.bottom-nav .nav-icon{  
+ width:27px;  
+ height:25px;  
+ display:grid;  
+ place-items:center;  
+ font-size:22px;  
+ line-height:1;  
+}  
+  
+.bottom-nav a.active{  
+ color:#ffad52;  
+ background:linear-gradient(180deg,#ff982f20,#ff982f08);  
+}  
+  
+.bottom-nav a:active{  
+ transform:scale(.94);  
+}  
+  
+@media(max-width:360px){  
+ .app{  
+  padding-left:13px;  
+  padding-right:13px;  
+ }  
+   .balance{font-size:29px}  
+ .action-icon{  
+  width:54px;  
+  height:54px;  
+ }  
+}  
+  
+/* PANEL MINING DIGITAL */  
+.mining-live{  
+ margin-top:18px;  
+ padding:18px 16px;  
+ border:1px solid #55402e;  
+ border-radius:20px;  
+ background:  
+  radial-gradient(circle at 90% 0%,#ff982f20,transparent 42%),  
+  linear-gradient(145deg,#242329,#17191e);  
+ box-shadow:0 10px 25px #0005,inset 0 1px 0 #ffffff0a;  
+ overflow:hidden;  
+}  
+.mining-live-head{  
+ display:flex;  
+ align-items:center;  
+ justify-content:space-between;  
+ gap:10px;  
+ margin-bottom:14px;  
+}  
+.mining-live-title{  
+ font-size:13px;  
+ font-weight:800;  
+ letter-spacing:.7px;  
+}  
+.live-indicator{  
+ display:inline-flex;  
+ align-items:center;  
+ gap:6px;  
+ color:#65d9a6;  
+ font-size:10px;  
+ font-weight:750;  
+ letter-spacing:1px;  
+}  
+.live-dot{  
+ width:7px;height:7px;border-radius:50%;  
+ background:#48c78e;  
+ box-shadow:0 0 10px #48c78e;  
+ animation:livePulse 1.5s infinite;  
+}  
+@keyframes livePulse{  
+ 0%,100%{opacity:1;box-shadow:0 0 8px #48c78e}  
+ 50%{opacity:.4;box-shadow:0 0 2px #48c78e}  
+}  
+.mining-digital{  
+ padding:15px 10px;  
+ border-radius:14px;  
+ text-align:center;  
+ background:#0d1013;  
+ border:1px solid #3b342d;  
+ box-shadow:inset 0 0 18px #0009;  
+}  
+.mining-number{  
+ color:#ffad52;  
+ font-family:"Courier New",monospace;  
+ font-size:clamp(20px,6vw,29px);  
+ font-weight:800;  
+ letter-spacing:1px;  
+ font-variant-numeric:tabular-nums;  
+ text-shadow:0 0 10px #ff982f55;  
+ overflow-wrap:anywhere;  
+}  
+.mining-unit{  
+ margin-top:7px;  
+ color:#a1a7b2;  
+ font-size:10px;  
+ letter-spacing:1.5px;  
+}  
+.mining-foot{  
+ display:flex;  
+ justify-content:space-between;  
+ gap:8px;  
+ margin-top:12px;  
+ color:#a1a7b2;  
+ font-size:10px;  
+}  
+.mining-foot strong{color:#f5b36b;font-weight:700}  
+  
+</style>  </head>  <body>  <main class="app">  <header class="top">  
+ <div class="brand">  
+  <img src="logo.png" class="logo" alt="MyShort">  
+  <div>  
+   MyShort  
+   <small>WALLET CENTER</small>  
+  </div>  
+ </div>  
+ <div class="secure">◆ &nbsp; AREA AMAN</div>  
+</header>  <!-- HALAMAN WALLET: langsung terbuka setelah login MyShort -->  <section class="screen active" id="walletScreen">   <div class="wallet-head">  
+  <div>  
+   <h1>Dompet Wallet</h1>  
+   <div class="sub">Aset Saldo Anda</div>  
+  </div>  
+  <div class="avatar">🛡</div>  
+ </div>   <div class="balance-card">    <div class="balance-row">  
+   <div class="balance-title">TOTAL SALDO RUPIAH</div>  
+   <button class="eye" id="eyeBtn">Sembunyikan</button>  
+  </div>    <div class="balance" id="mainBalance">Memuat...</div>    <div class="balance-foot">CODE 211.03.0004</div>   </div>   <div class="actions">    <a class="action" href="deposit.html">  
+   <div class="action-icon">＋</div>  
+   Deposit  
+  </a>    <a class="action" href="withdrawal.html">  
+   <div class="action-icon">↗</div>  
+   Withdraw  
+  </a>    <a class="action" href="swap-rupiah.html">  
+   <div class="action-icon">⇄</div>  
+   Swap  
+  </a>    <a class="action" href="misi.html">  
+   <div class="action-icon">▤</div>  
+   Misi  
+  </a>   </div>   <div class="section-title">  
+  <strong>Aset Saya</strong>  
+  <span>Ringkasan saldo</span>  
+ </div>   <div class="asset-list">    <div class="asset">     <div class="coin idr">Rp</div>     <div class="asset-info">  
+    <b>Rupiah</b>  
+    <small>IDR · Saldo utama</small>  
+   </div>     <div class="asset-value">  
+    <span id="idrAsset">Memuat...</span>  
+    <small>MyShort Wallet</small>  
+   </div>    </div>    <div class="asset">     <div class="coin">XMR</div>     <div class="asset-info">  
+    <b>Koin</b>  
+    <small>XMR · Saldo tersedia</small>  
+   </div>     <div class="asset-value">  
+    <span id="xmrAsset">Memuat...</span>  
+    <small>XMR</small>  
+   </div>    </div>   </div>   <div class="section-title" style="margin-top:24px">  
+  <strong>Aktivitas Terbaru</strong>  
+  <span>Semua aktivitas</span>  
+ </div>   <div class="history" id="historyInfo">  
+  Lihat seluruh aktivitas melalui menu Riwayat.  
+ </div>    <div class="mining-live" aria-live="polite">  
+   <div class="mining-live-head">  
+    <div class="mining-live-title">MINING XMR LIVE</div>  
+    <div class="live-indicator"><span class="live-dot"></span> TERHUBUNG</div>  
+   </div>  
+   <div class="mining-digital">  
+    <div class="mining-number" id="miningDigital">0.000000000000</div>  
+    <div class="mining-unit">XMR · SALDO TERSEDIA</div>  
+   </div>  
+   <div class="mining-foot">  
+    <span>Data dari MyShort Wallet</span>  
+    <strong id="miningUpdated">Menunggu data...</strong>  
+   </div>  
+  </div>   <div class="status" id="walletStatus"></div>   <p class="notice">  
+  Saldo ditampilkan berdasarkan data akun MyShort yang sedang login.    
+ </p>  </section>  
+</main>  <!-- NAVIGASI BAWAH -->  <nav class="bottom-nav" aria-label="Navigasi utama MyShort">   <a href="dashboard.html">  
+  <span class="nav-icon">⌂</span>  
+  <span>Home</span>  
+ </a>   <a href="mission.html">  
+  <span class="nav-icon">◎</span>  
+  <span>mission</span>  
+ </a>   <a href="market.html">  
+  <span class="nav-icon">▦</span>  
+  <span>Market</span>  
+ </a>  
+ <a href="profile.html">  
+  <span class="nav-icon">♙</span>  
+  <span>Profile</span>  
+ </a>  </nav>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <script src="supabase-config.js"></script>  <script>  
+(()=>{  
+ 'use strict';  
+  
+ let hidden=false;  
+ let currentIdr=0;  
+ let currentXmr=0;  
+ let refreshTimer=null;  
+  
+ const rupiah=n=>new Intl.NumberFormat('id-ID',{  
+  style:'currency',  
+  currency:'IDR',  
+  maximumFractionDigits:0  
+ }).format(Number(n)||0);  
+  
+ const xmr=n=>Number(n||0).toFixed(12);  
+  
+ function setUnavailable(label='Tidak tersedia'){  
+  document.getElementById('mainBalance').textContent=label;  
+  document.getElementById('idrAsset').textContent=label;  
+  document.getElementById('xmrAsset').textContent=label;  
+  document.getElementById('miningDigital').textContent='0.000000000000';  
+ }  
+  
+ function animateMiningValue(from,to){  
+  const el=document.getElementById('miningDigital');  
+  const start=performance.now();  
+  const duration=900;  
+  function frame(now){  
+   const progress=Math.min((now-start)/duration,1);  
+   const eased=1-Math.pow(1-progress,3);  
+   const value=from+(to-from)*eased;  
+   el.textContent=xmr(value);  
+   if(progress<1) requestAnimationFrame(frame);  
+  }  
+  requestAnimationFrame(frame);  
+ }  
+  
+ function renderBalances(){  
+  document.getElementById('mainBalance').textContent=  
+   hidden?'••••••••':rupiah(currentIdr);  
+  document.getElementById('idrAsset').textContent=  
+   hidden?'••••••':rupiah(currentIdr);  
+  document.getElementById('xmrAsset').textContent=  
+   hidden?'••••••':xmr(currentXmr);  
+  document.getElementById('miningDigital').textContent=  
+   hidden?'••••••••':xmr(currentXmr);  
+ }  
+  
+ async function loadWallet(){  
+  const status=document.getElementById('walletStatus');  
+  const sb=window.sb||window.supabaseClient;  
+  
+  if(!sb){  
+   status.textContent='Konfigurasi Supabase tidak ditemukan. Periksa supabase-config.js.';  
+   setUnavailable();  
+   return;  
+  }  
+  
+  try{  
+   status.textContent='Menghubungkan ke Supabase...';  
+   const {data:authData,error:authError}=await sb.auth.getUser();  
+   if(authError) throw authError;  
+  
+   const user=authData?.user;  
+   if(!user){  
+    status.textContent='Silakan login ke akun MyShort terlebih dahulu.';  
+    setUnavailable('Belum login');  
+    return;  
+   }  
+  
+   const [walletResult,miningResult]=await Promise.all([  
+    sb.from('wallets')  
+      .select('balance')  
+      .eq('user_id',user.id)  
+      .maybeSingle(),  
+    sb.from('mining_wallets')  
+      .select('available_amount,asset_code')  
+      .eq('user_id',user.id)  
+      .eq('asset_code','XMR')  
+      .maybeSingle()  
+   ]);  
+  
+   if(walletResult.error) throw walletResult.error;  
+   if(miningResult.error) throw miningResult.error;  
+  
+   const previousXmr=currentXmr;  
+   currentIdr=Number(walletResult.data?.balance||0);  
+   currentXmr=Number(miningResult.data?.available_amount||0);  
+  
+   renderBalances();  
+   if(!hidden) animateMiningValue(previousXmr,currentXmr);  
+  
+   document.getElementById('miningUpdated').textContent=  
+    'Update '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'});  
+   status.textContent='Saldo berhasil diperbarui.';  
+  }catch(error){  
+   console.error('MyShort Wallet:',error);  
+   status.textContent='Gagal mengambil saldo: '+(error.message||'Periksa koneksi Supabase.');  
+   setUnavailable('Gagal memuat');  
+  }  
+ }  
+  
+ document.getElementById('eyeBtn').addEventListener('click',()=>{  
+  hidden=!hidden;  
+  document.getElementById('eyeBtn').textContent=hidden?'Tampilkan':'Sembunyikan';  
+  renderBalances();  
+ });  
+  
+ loadWallet();  
+ refreshTimer=setInterval(loadWallet,30000);  
+  
+})();  
+</script>  </body>  
+</html>  
+
