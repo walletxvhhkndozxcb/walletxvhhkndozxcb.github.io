@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <meta name="description" content="MyShort Wallet">
+  <title>MyShort Wallet</title>
+
+  <style>
+    *{box-sizing:border-box}
+
+    html,body{
+      width:100%;
+      height:100%;
+      margin:0;
+    }
+
+    body{
+      min-height:100vh;
+      min-height:100dvh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 50% 43%,#21170e 0%,#101010 40%,#090a0d 78%);
+      color:#f5f5f5;
+      font-family:Inter,Roboto,Arial,sans-serif;
+    }
+
+    .splash{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:15px;
+      padding:24px;
+      text-align:center;
+      animation:appear .7s ease both;
+    }
+
+    .logo{
+      width:76px;
+      height:76px;
+      object-fit:contain;
+      display:block;
+      filter:drop-shadow(0 5px 20px rgba(255,145,35,.28));
+    }
+
+    .brand{
+      margin:0;
+      color:#ff9b32;
+      font-size:25px;
+      font-weight:850;
+      letter-spacing:2px;
+      line-height:1.2;
+      text-shadow:0 2px 12px rgba(255,145,35,.2);
+    }
+
+    .brand span{
+      color:#f5f1e9;
+    }
+
+    .subtitle{
+      margin:0;
+      color:#99938a;
+      font-size:10px;
+      font-weight:600;
+      letter-spacing:2.5px;
+    }
+
+    @keyframes appear{
+      from{
+        opacity:0;
+        transform:translateY(7px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      .splash{animation:none}
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="splash" aria-label="MyShort Wallet">
+
+    <!-- LOGO -->
+    <img
+      class="logo"
+      src="logo.png"
+      alt="Logo MyShort"
+    >
+
+    <!-- NAMA APLIKASI -->
+    <h1 class="brand">
+      M - <span>WALLET</span>
+    </h1>
+
+    <p class="subtitle">
+      DIGITAL WALLET
+    </p>
+
+  </main>
+
+  <script>
+    // Layar pembuka, lalu lanjut ke halaman login.
+    window.setTimeout(function(){
+      window.location.replace('login.html');
+    }, 1800);
+  </script>
+
+</body>
+</html>
